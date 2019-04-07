@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="StringFormatter.SplitOptions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StringFormatter"
+             xmlns:VM="clr-namespace:StringFormatter.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="200">
+
+    <UserControl.DataContext>
+        <VM:SplitOptionsViewModel />
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" FlowDirection="LeftToRight" Orientation="Horizontal">
+            <Label FontSize="10" Content="{Binding LabelText, Mode=OneWay}"></Label>
+            <ComboBox SelectedItem="{Binding SelectedOption, UpdateSourceTrigger=PropertyChanged}"
+                      FontSize="10" >
+                <ComboBoxItem>CRLF</ComboBoxItem>
+                <ComboBoxItem>Comma</ComboBoxItem>
+                <ComboBoxItem>Period</ComboBoxItem>
+                <ComboBoxItem>Back Slash (\)</ComboBoxItem>
+                <ComboBoxItem>Forward Slash (/)</ComboBoxItem>
+                <ComboBoxItem>Pipe (|)</ComboBoxItem>
+                <ComboBoxItem>Other</ComboBoxItem>
+            </ComboBox>
+            <TextBox Name="tbSplitByOther" Width="20" Visibility="{Binding ShowTextbox}"></TextBox>
+        </StackPanel>
+    </Grid>
+</UserControl>
