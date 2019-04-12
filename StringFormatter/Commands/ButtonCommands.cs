@@ -38,65 +38,71 @@ namespace StringFormatter.Commands
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Default event handler naming pattern")]
         private void Build()
         {
-            var sb = new StringBuilder();
-            var opts = ViewModel.SplitOptions;
-            var stringSeparators = new string[] { "\r\n" };
-            var sbFmt = new StringBuilder();
-            string[] lines;
-
-            var find = Regex.Matches(ViewModel.StringFormat, @"\{[^\d]+\}");
-
-            if (find.Count > 0)
+            try
             {
-                foreach (var s in find)
+                var sb = new StringBuilder();
+                var opts = ViewModel.SplitOptions;
+                var stringSeparators = new string[] { "\r\n" };
+                var sbFmt = new StringBuilder();
+                string[] lines;
+
+                var find = Regex.Matches(ViewModel.StringFormat, @"\{[^\d]+\}");
+
+                if (find.Count > 0)
                 {
-                    var xx = s.ToString().Replace("{", "{{").Replace("}", "}}");
-                    sbFmt.Append(Regex.Replace(ViewModel.StringFormat, @"\{[^\d]+\}", xx));
-                }
-            }
-            else
-            {
-                
-            }
-
-            if (opts[0] == "\\r\\n")
-            {
-                lines = ViewModel.Items.Split(stringSeparators, StringSplitOptions.None);
-            }
-            else
-            {
-                lines = ViewModel.Items.Split(opts[0].ToCharArray(), StringSplitOptions.None);
-            }
-
-            if (opts.Count > 1)
-            {
-                foreach (var strToSplit in lines)
-                {
-                    string[] tmpStr;
-
-                    if (opts[1] == "\\r\\n")
+                    foreach (var s in find)
                     {
-                        tmpStr = strToSplit.Split(stringSeparators, StringSplitOptions.None);
+                        var xx = s.ToString().Replace("{", "{{").Replace("}", "}}");
+                        sbFmt.Append(Regex.Replace(ViewModel.StringFormat, @"\{[^\d]+\}", xx));
                     }
-                    else
-                    {
-                        tmpStr = strToSplit.Split(opts[1].ToCharArray(), StringSplitOptions.None);
-                    }
-
-                    sb.AppendLine(string.Format(sbFmt.ToString(), tmpStr as object[]));
                 }
-            }
-            else
-            {
-                foreach (var str in lines)
+                else
                 {
-                    sb.AppendLine(string.Format(sbFmt.ToString(), str));
+
                 }
+
+                if (opts[0] == "\\r\\n")
+                {
+                    lines = ViewModel.Items.Split(stringSeparators, StringSplitOptions.None);
+                }
+                else
+                {
+                    lines = ViewModel.Items.Split(opts[0].ToCharArray(), StringSplitOptions.None);
+                }
+
+                if (opts.Count > 1)
+                {
+                    foreach (var strToSplit in lines)
+                    {
+                        string[] tmpStr;
+
+                        if (opts[1] == "\\r\\n")
+                        {
+                            tmpStr = strToSplit.Split(stringSeparators, StringSplitOptions.None);
+                        }
+                        else
+                        {
+                            tmpStr = strToSplit.Split(opts[1].ToCharArray(), StringSplitOptions.None);
+                        }
+
+                        sb.AppendLine(string.Format(sbFmt.ToString(), tmpStr as object[]));
+                    }
+                }
+                else
+                {
+                    foreach (var str in lines)
+                    {
+                        sb.AppendLine(string.Format(sbFmt.ToString(), str));
+                    }
+                }
+
+                sb.Replace("{{", "{").Replace("}}", "}");
+                ViewModel.Output = sb.ToString();
             }
-
-            sb.Replace("{{", "{").Replace("}}", "}");
-            ViewModel.Output = sb.ToString();
-
+            catch(Exception ex)
+            {
+                ViewModel.Output = ex.Message;
+            }
         }
         #endregion
 

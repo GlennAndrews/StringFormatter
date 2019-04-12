@@ -21,76 +21,63 @@
     </UserControl.DataContext>
     
     <Grid>
-        <TabControl x:Name="tabControl" FontSize="16">
-            <TabItem Header="Details">
-                <Grid Background="#FFE5E5E5">
+        <Grid Background="#FFE5E5E5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0">String Format: (ex: {0})</Label>
+                <TextBox Name="tbStringFormat" Grid.Row="1" Grid.Column="0" Text="{Binding StringFormat, Mode=OneWayToSource}" TextWrapping="NoWrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FontFamily="Courier New"></TextBox>
+                <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" Width="5"></GridSplitter>
+                <Label Grid.Row="0" Grid.Column="2">Output:</Label>
+                <TextBox Name="tbOutPut" Text="{Binding Output, Mode=OneWay}" Grid.Row="1" Grid.Column="2" TextWrapping="NoWrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
+            </Grid>
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="5" Grid.ColumnSpan="2"></GridSplitter>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBox Name="tbItems" Grid.Row="0" Grid.Column="0" Text="{Binding Items, Mode=OneWayToSource}" TextWrapping="NoWrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FontFamily="Courier New"></TextBox>
+                <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0">String Format: (ex: {0})</Label>
-                        <TextBox Name="tbStringFormat" Grid.Row="1" Grid.Column="0" Text="{Binding StringFormat, Mode=OneWayToSource}" TextWrapping="NoWrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FontFamily="Courier New"></TextBox>
-                        <Popup IsOpen="False" Placement="Center" Grid.Row="1">
-                            <TextBlock Text="Important update!!" Background="White" Foreground="Black"></TextBlock>
-                        </Popup>
-                    </Grid>
-                    <GridSplitter Grid.Row="1" Background="Silver" HorizontalAlignment="Stretch" Height="5" Grid.ColumnSpan="2"></GridSplitter>
-                    <Grid Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox Name="tbItems" Grid.Row="0" Grid.Column="0" Text="{Binding Items, Mode=OneWayToSource}" TextWrapping="NoWrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FontFamily="Courier New"></TextBox>
-                        <Grid Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <ItemsControl ItemsSource="{Binding SplitOptionControls}" Grid.Column="0" Grid.ColumnSpan="4">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                            <Button x:Name="CmdBuild" Command="{Binding CmdBuild, Mode=OneWay}" Grid.Column="4" Content="Build" Width="75" HorizontalAlignment="Right"/>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Output">
-                <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="19*"/>
-                        <ColumnDefinition Width="275*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBox Name="tbOutPut" Text="{Binding Output, Mode=OneWay}" Grid.Row="0" TextWrapping="NoWrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2"></TextBox>
-                    <Button Grid.Row="1" Command="{Binding CmdCopy, Mode=OneWay}" Content="Copy" HorizontalAlignment="Right" Grid.Column="1" Width="75" />
+                    <ItemsControl ItemsSource="{Binding SplitOptionControls}" Grid.Column="0" Grid.ColumnSpan="4">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <StackPanel Orientation="Horizontal" Grid.Column="4" HorizontalAlignment="Right">
+                        <Button x:Name="CmdBuild" Command="{Binding CmdBuild, Mode=OneWay}" Content="Build" Width="75" HorizontalAlignment="Right"/>
+                        <Button x:Name="CmdCopy" Command="{Binding CmdCopy, Mode=OneWay}" Content="Copy" HorizontalAlignment="Right" Width="75" />
+                    </StackPanel>
                 </Grid>
-            </TabItem>
-        </TabControl>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>
