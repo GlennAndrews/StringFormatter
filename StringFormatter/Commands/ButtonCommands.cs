@@ -50,15 +50,15 @@ namespace StringFormatter.Commands
 
                 if (find.Count > 0)
                 {
-                    foreach (var s in find)
+                    foreach (var str in find)
                     {
-                        var xx = s.ToString().Replace("{", "{{").Replace("}", "}}");
-                        sbFmt.Append(Regex.Replace(ViewModel.StringFormat, @"\{[^\d]+\}", xx));
+                        var tmp = str.ToString().Replace("{", "{{").Replace("}", "}}");
+                        sbFmt.Append(Regex.Replace(ViewModel.StringFormat, @"\{[^\d]+\}", tmp));
                     }
                 }
                 else
                 {
-
+                    sbFmt.AppendLine(ViewModel.StringFormat);
                 }
 
                 if (opts[0] == "\\r\\n")
