@@ -56,13 +56,14 @@
   <ItemGroup>
     <Compile Include="Commands\ButtonCommands.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Content\SplitOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SplitOptions.xaml.cs">
+    <Compile Include="Views\SplitOptions.xaml.cs">
       <DependentUpon>SplitOptions.xaml</DependentUpon>
     </Compile>
     <Compile Include="StringFormatterPopup.cs" />
     <Compile Include="StringFormatterPopupCommand.cs" />
-    <Compile Include="StringFormatterPopupControl.xaml.cs">
+    <Compile Include="Views\StringFormatterPopupControl.xaml.cs">
       <DependentUpon>StringFormatterPopupControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="StringFormatterPopupPackage.cs" />
@@ -163,6 +164,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -180,11 +182,11 @@
     <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.15.8.122\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="SplitOptions.xaml">
+    <Page Include="Views\SplitOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StringFormatterPopupControl.xaml">
+    <Page Include="Views\StringFormatterPopupControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

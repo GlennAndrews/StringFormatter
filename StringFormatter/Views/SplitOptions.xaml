@@ -17,18 +17,13 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" FlowDirection="LeftToRight" Orientation="Horizontal">
-            <Label FontSize="10" Content="{Binding LabelText, Mode=OneWay}"></Label>
-            <ComboBox SelectedItem="{Binding SelectedOption, UpdateSourceTrigger=PropertyChanged}"
-                      FontSize="10" >
-                <ComboBoxItem>CRLF</ComboBoxItem>
-                <ComboBoxItem>Comma</ComboBoxItem>
-                <ComboBoxItem>Period</ComboBoxItem>
-                <ComboBoxItem>Back Slash (\)</ComboBoxItem>
-                <ComboBoxItem>Forward Slash (/)</ComboBoxItem>
-                <ComboBoxItem>Pipe (|)</ComboBoxItem>
-                <ComboBoxItem>Other</ComboBoxItem>
+            <Label Content="{Binding LabelText, Mode=OneWay}"></Label>
+            <ComboBox ItemsSource="{Binding AvailableOptions}"
+                DisplayMemberPath="DisplayText"
+                SelectedValuePath="Value"
+                SelectedValue="{Binding Value, Mode=TwoWay}">
             </ComboBox>
-            <TextBox Name="tbSplitByOther" Width="20" Visibility="{Binding ShowTextbox}"></TextBox>
+            <TextBox Name="tbSplitByOther" Width="40" MinWidth="1" Visibility="{Binding ShowTextbox}" Text="{Binding OtherSplitBy, Mode=TwoWay}"></TextBox>
         </StackPanel>
     </Grid>
 </UserControl>

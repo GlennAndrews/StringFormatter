@@ -1,13 +1,13 @@
 ﻿using StringFormatter.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace StringFormatter.ViewModels
 {
@@ -15,6 +15,7 @@ namespace StringFormatter.ViewModels
     {
         #region Privates
         private ButtonCommands _buttonCommands;
+        private ObservableCollection<SplitOptions> _splitOptionsControls = new ObservableCollection<SplitOptions>();
         #endregion
 
         #region Events
@@ -22,25 +23,59 @@ namespace StringFormatter.ViewModels
         #endregion
 
         #region Buttons
-        //public ICommand CmdBuild => _buttonCommands.CmdBuild;
-        //public ICommand CmdCopy => _buttonCommands.CmdCopy;
+        public ICommand CmdBuild => _buttonCommands.CmdBuild;
+        public ICommand CmdCopy => _buttonCommands.CmdCopy;
         #endregion
 
         #region Properties
-        private string _input;
-        public string Input
+        public ObservableCollection<SplitOptions> SplitOptionControls
         {
             get
             {
-                return _input;
+                return _splitOptionsControls;
             }
             set
             {
-                if (value != this._input)
+                if(this._splitOptionsControls != value)
                 {
-                    this._input = value;
+                    this._splitOptionsControls = value;
                     NotifyPropertyChanged();
                 }
+            }
+        }
+
+        private string _stringFormat;
+        public string StringFormat
+        {
+            get
+            {
+                return _stringFormat;
+            }
+            set
+            {
+                if (value != this._stringFormat)
+                {
+                    this._stringFormat = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _items;
+        public string Items
+        {
+            get
+            {
+                return _items;
+            }
+            set
+            {
+                if (value != this._items)
+                {
+                    this._items = value;
+                    NotifyPropertyChanged();
+                }
+
             }
         }
 
@@ -58,7 +93,34 @@ namespace StringFormatter.ViewModels
                     this._output = value;
                     NotifyPropertyChanged();
                 }
+            }
+        }
 
+        public List<string> SplitOptions
+        {
+            get
+            {
+                var opts = new List<string>();
+
+                foreach (var ctrl in _splitOptionsControls)
+                {
+                    var selectedItem = (ctrl.DataContext as SplitOptionsViewModel).Value;
+                    if(!string.IsNullOrWhiteSpace(selectedItem))
+                    {
+                        if (selectedItem.EndsWith("Other"))
+                        {
+                            var otherSplitBy = (ctrl.DataContext as SplitOptionsViewModel).OtherSplitBy;
+                            opts.Add(otherSplitBy);
+                        }
+                        else
+                        {
+                            opts.Add(selectedItem);
+                        }
+                    }
+                    
+                }
+
+                return opts;
             }
         }
         #endregion
@@ -70,10 +132,26 @@ namespace StringFormatter.ViewModels
             {
                 ViewModel = this
             };
+
+            addSplitOptionControl("Split By:");
+            addSplitOptionControl("Then By:");
+
         }
         #endregion
 
         #region Private Methods
+        private void addSplitOptionControl(string labelText)
+        {
+            var ctrl = new SplitOptions();
+            var vm = new SplitOptionsViewModel();
+
+            ctrl.DataContext = vm;
+            vm.ParentVM = this;
+            vm.LabelText = labelText;
+
+            SplitOptionControls.Add(ctrl);
+        }
+
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
